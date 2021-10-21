@@ -20,3 +20,7 @@ go to the `.env` file and change the port no
 ## Change Email Setting
 
 go to the `.env` file and change the email setting
+
+
+##Start Server
+npm run start
