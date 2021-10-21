@@ -1,7 +1,7 @@
 # Test Project
 Test Assignment Project
 
-##
+## Create Database
 Create a `test_project` database in `mysql` and execute the `test_project.sql` sql script.
 
 
