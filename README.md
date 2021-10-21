@@ -22,5 +22,5 @@ go to the `.env` file and change the port no
 go to the `.env` file and change the email setting
 
 
-##Start Server
-npm run start
+## Start Server
+open terminal or command prompt go to project root folder and type `npm run start`
