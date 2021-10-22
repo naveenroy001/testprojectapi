@@ -20,3 +20,7 @@ go to the `.env` file and change the port no
 ## Change Email Setting
 
 go to the `.env` file and change the email setting
+
+
+## Start Server
+open terminal or command prompt go to project root folder and type `npm run start`
