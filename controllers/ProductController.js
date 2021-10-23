@@ -56,20 +56,34 @@ exports.dashboardBarChart = async function(req, res) {
     let userId = req.params.userId;
     let cityId = req.params.cityId;
     let bargraph = null;
+    let donut = null;
     if (cityId == 0) {
         bargraph = await DB.query("SELECT p.product_name ,sum(p.revenue) actual_revenue,sum(p.target_revenue) target_revenue,c.name city_name FROM products p " +
             " JOIN cities c ON c.id = p.city_id WHERE user_id = " + userId + " GROUP BY p.product_name,c.name ORDER BY p.product_name", { type: QueryTypes.SELECT });
+
+        donut = await DB.query("SELECT product_name ,Sum(revenue) revenue FROM products WHERE user_id = " + userId + " GROUP BY product_name ORDER BY revenue DESC LIMIT 5", { type: QueryTypes.SELECT });
+
     } else {
         bargraph = await DB.query("SELECT p.product_name ,sum(p.revenue) actual_revenue,sum(p.target_revenue) target_revenue,c.name city_name FROM products p " +
             " JOIN cities c ON c.id = p.city_id WHERE user_id = " + userId + "  and p.city_id = " + cityId + " GROUP BY p.product_name,c.name ORDER BY p.product_name", { type: QueryTypes.SELECT });
+
+        donut = await DB.query("SELECT p.product_name ,Sum(p.revenue) revenue FROM products p JOIN cities c ON c.id = p.city_id WHERE p.user_id = " + userId + " and p.city_id = " + cityId + " GROUP BY p.product_name,c.name ORDER BY revenue DESC LIMIT 5", { type: QueryTypes.SELECT });
     }
 
+
     if (bargraph) {
+
+        let results = {
+            "donut": donut,
+            "bargraph": bargraph,
+        }
+
         let result = {
             "status": true,
             "message": "Record fetched successfully",
-            "result": bargraph
+            "result": results
         }
+
         res.status(200).send(result);
     }
     res.status(200).send({
